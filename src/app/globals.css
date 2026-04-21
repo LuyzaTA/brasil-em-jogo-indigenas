@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'maplibre-gl/dist/maplibre-gl.css';
+
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --green-dark:  #1a3a2a;
+    --green-mid:   #2d6a4f;
+    --green-light: #52b788;
+    --gold:        #c9a94a;
+    --gold-light:  #e9c46a;
+    --earth:       #8b5e3c;
+    --cream:       #f4f0e8;
+    --cream-light: #faf7f2;
+    --text-dark:   #181818;
+    --text-mid:    #3a3a3a;
+    --text-light:  #6b6b6b;
+
+    /* Indigenous geometric patterns (diamond grid, chevron border) */
+    --pattern-diamond: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpolygon points='30,3 57,30 30,57 3,30' fill='none' stroke='rgba(201,169,74,.13)' stroke-width='1'/%3E%3Cpolygon points='30,15 45,30 30,45 15,30' fill='none' stroke='rgba(201,169,74,.07)' stroke-width='.7'/%3E%3C/svg%3E");
+    --pattern-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='10'%3E%3Cpolyline points='0,10 12,1 24,10' fill='none' stroke='rgba(201,169,74,.4)' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --pattern-dots:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='1.2' fill='rgba(201,169,74,.2)'/%3E%3C/svg%3E");
+  }
+
+  html, body {
+    height: 100%;
+    background-color: var(--cream);
+    color: var(--text-dark);
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-semibold tracking-tight;
+    color: var(--text-dark);
+  }
+
+  a { @apply transition-colors; }
+}
+
+/* ─── Utility classes ────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Geometric diamond background pattern */
+  .bg-pattern-diamond {
+    background-image: var(--pattern-diamond);
+    background-size: 60px 60px;
+  }
+
+  /* Chevron repeating border (used on top edge) */
+  .border-chevron-top {
+    border-top: none;
+    background-image: var(--pattern-chevron);
+    background-repeat: repeat-x;
+    background-position: top center;
+    background-size: 24px 10px;
+    padding-top: 12px;
+  }
+
+  /* Dot grid subtle texture */
+  .bg-pattern-dots {
+    background-image: var(--pattern-dots);
+    background-size: 20px 20px;
+  }
+
+  /* Inline diamond marker — use as a decorative bullet */
+  .diamond-mark::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg) translateY(-1px);
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+}
+
+/* ─── Component classes ──────────────────────────────────────────────────── */
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 rounded text-sm font-semibold tracking-wide;
+    background: var(--green-mid);
+    color: white;
+    &:hover { background: var(--green-dark); }
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 rounded text-sm font-medium;
+    color: var(--green-mid);
+    &:hover { background: rgba(45,106,79,.1); }
+  }
+
+  /* Card with subtle left geometric accent */
+  .card {
+    @apply bg-white rounded-xl shadow-sm p-5;
+    border: 1px solid rgba(0,0,0,.07);
+    border-left: 3px solid var(--gold);
+  }
+
+  .tag {
+    @apply inline-block text-xs font-semibold px-2 py-0.5 rounded-full tracking-wider uppercase;
+  }
+
+  /* Hero section with diamond background pattern */
+  .hero-section {
+    background-color: var(--green-dark);
+    background-image: var(--pattern-diamond);
+    background-size: 60px 60px;
+    color: white;
+  }
+
+  /* Geometric horizontal rule */
+  .rule-geo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gold);
+    opacity: 0.4;
+  }
+  .rule-geo::before,
+  .rule-geo::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+  }
+}
+
+/* ─── MapLibre controls ──────────────────────────────────────────────────── */
+.maplibregl-ctrl-group {
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15) !important;
+}
+.maplibregl-ctrl-group button {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c8bfaa; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a09888; }

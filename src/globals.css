@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import MapLibre's default styles so map controls render correctly.
+   The CSS file lives in node_modules once dependencies are installed.
+   When building the project for production the bundler will inline it. */
+@import 'maplibre-gl/dist/maplibre-gl.css';
