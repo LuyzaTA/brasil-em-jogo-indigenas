@@ -32,6 +32,12 @@ function clean(text: string | null | undefined): string {
   return text.replace(/【[^】]*】/g, '').trim();
 }
 
+function formatPop(n: number): string {
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace('.0', '') + 'M';
+  if (n >= 1_000) return Math.round(n / 1_000) + 'K';
+  return String(n);
+}
+
 function eraColor(dateStr: string): string {
   const y = new Date(dateStr).getFullYear();
   if (y < 1800) return '#a0522d';
@@ -73,7 +79,7 @@ export default function Home() {
   const popupYear  = popup ? new Date(popup.event.date).getFullYear() : 0;
 
   return (
-    <div className="flex flex-col flex-1 min-h-0" style={{ height: 'calc(100vh - 62px - 36px)' }}>
+    <div className="flex flex-col flex-1 min-h-0" style={{ height: 'calc(100vh - 62px - 38px)' }}>
 
       {/* Map area */}
       <div className="flex flex-1 min-h-0">
@@ -92,7 +98,7 @@ export default function Home() {
       {timeline.length > 0 && (
         <div
           className="flex-shrink-0 border-t select-none"
-          style={{ height: '72px', background: '#0d1f16', borderColor: 'rgba(201,169,74,0.15)' }}
+          style={{ height: '90px', background: '#0d1f16', borderColor: 'rgba(201,169,74,0.15)' }}
         >
           <div className="relative h-full flex items-end overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
 
@@ -133,6 +139,21 @@ export default function Home() {
                     onMouseEnter={(e) => handleDotEnter(event, e)}
                     onMouseLeave={handleDotLeave}
                   >
+                    {/* Population number above dot */}
+                    {event.population != null ? (
+                      <span
+                        className="text-[10px] font-black leading-none mb-1.5 tracking-tight"
+                        style={{
+                          color: isHovered ? evColor : `${evColor}99`,
+                          transition: 'color 0.15s ease',
+                        }}
+                      >
+                        {formatPop(event.population)}
+                      </span>
+                    ) : (
+                      <span style={{ height: '16px', display: 'block' }} />
+                    )}
+
                     {/* Diamond dot on spine */}
                     <div
                       className="flex-shrink-0 mb-[14px]"
