@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import ModeControls from '../components/ModeControls';
 import Sidebar from '../components/Sidebar';
@@ -54,38 +54,7 @@ export default function Home() {
   const [mode, setMode] = useState<'territories' | 'peoples' | 'data' | 'history'>('territories');
   const [selectedFeature, setSelectedFeature] = useState<any>(null);
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
-  const [popup, setPopup]       = useState<PopupState | null>(null);
-  const [playing, setPlaying]   = useState(false);
-  const audioRef                = useRef<HTMLAudioElement | null>(null);
-
-  // Autoplay on first user interaction (browser policy requires gesture)
-  useEffect(() => {
-    const audio = new Audio('/WhatsApp%20Audio%202026-04-22%20at%2013.00.29.mp3');
-    audio.loop = true;
-    audio.volume = 0.35;
-    audioRef.current = audio;
-
-    const tryPlay = () => {
-      audio.play().then(() => setPlaying(true)).catch(() => {});
-      window.removeEventListener('click', tryPlay);
-      window.removeEventListener('keydown', tryPlay);
-    };
-    window.addEventListener('click', tryPlay);
-    window.addEventListener('keydown', tryPlay);
-
-    return () => {
-      window.removeEventListener('click', tryPlay);
-      window.removeEventListener('keydown', tryPlay);
-      audio.pause();
-    };
-  }, []);
-
-  const toggleMusic = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (playing) { audio.pause(); setPlaying(false); }
-    else { audio.play().then(() => setPlaying(true)).catch(() => {}); }
-  };
+  const [popup, setPopup] = useState<PopupState | null>(null);
 
   useEffect(() => {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -221,47 +190,11 @@ export default function Home() {
               })}
             </div>
 
-            {/* Music player + Donate button */}
+            {/* Donate button */}
             <div
               className="sticky right-0 z-20 flex-shrink-0 flex items-center gap-2 h-full pl-10 pr-3"
               style={{ background: 'linear-gradient(to left, #0d1f16 60%, transparent)' }}
             >
-              {/* Music toggle */}
-              <button
-                onClick={toggleMusic}
-                title="Forest Lament Resurgence — luyzatalexandre"
-                className="flex flex-col items-center justify-center gap-0.5 px-2.5 py-2 rounded-xl transition-all duration-200 hover:brightness-110 hover:scale-105 active:scale-95"
-                style={{
-                  background: playing ? 'rgba(201,169,74,0.15)' : 'rgba(255,255,255,0.05)',
-                  border: `1px solid ${playing ? 'rgba(201,169,74,0.4)' : 'rgba(255,255,255,0.1)'}`,
-                }}
-              >
-                {playing ? (
-                  /* Animated bars when playing */
-                  <div className="flex items-end gap-[2px]" style={{ height: '14px' }}>
-                    {[3, 5, 4, 6, 3].map((h, i) => (
-                      <span
-                        key={i}
-                        className="w-[2px] rounded-full"
-                        style={{
-                          height: `${h * 2}px`,
-                          background: '#c9a94a',
-                          animation: `bounce ${0.4 + i * 0.1}s ease-in-out infinite alternate`,
-                        }}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  /* Static note icon when paused */
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="rgba(255,255,255,0.4)">
-                    <path d="M9 3v10.55A4 4 0 1 0 11 17V7h4V3H9z"/>
-                  </svg>
-                )}
-                <span className="text-[8px] font-semibold tracking-wider uppercase leading-none"
-                  style={{ color: playing ? 'rgba(201,169,74,0.8)' : 'rgba(255,255,255,0.3)' }}>
-                  {playing ? 'On' : 'Off'}
-                </span>
-              </button>
               <a
                 href="https://www.funai.gov.br/index.php/comunicacao/noticias/7879-apoio-as-populacoes-indigenas"
                 target="_blank"
@@ -297,14 +230,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
-      {/* Bouncing bars animation */}
-      <style>{`
-        @keyframes bounce {
-          from { transform: scaleY(0.4); }
-          to   { transform: scaleY(1); }
-        }
-      `}</style>
 
       {/* ── Fixed popup ── */}
       {popup && (

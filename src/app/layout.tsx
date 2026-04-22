@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { LanguageProvider } from '../contexts/LanguageContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import AudioPlayer from '../components/AudioPlayer';
 
 export const metadata = {
   title: 'Brasil em Jogo — Povos Indígenas',
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </main>
           <Footer />
+          <AudioPlayer />
         </LanguageProvider>
       </body>
     </html>
