@@ -61,7 +61,7 @@ export const t = {
       history: 'History',
       learn: 'Learn',
     },
-    footer: 'Data: FUNAI · IBGE · Official Brazilian government sources',
+    footer: 'Data: FUNAI · IBGE · Official Brazilian Government Sources',
     home: {
       timelineLabel1: 'Time',
       timelineLabel2: 'line',
