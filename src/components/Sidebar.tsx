@@ -97,29 +97,6 @@ export default function Sidebar({ feature, onClose }: SidebarProps) {
           </div>
         )}
 
-        {/* Link to detail page — only when official gov data exists */}
-        {props.id && !!(props.summary_pt || props.facts_pt || props.population) ? (
-          <a
-            href={isTerritory
-              ? (lang === 'en' ? `/en/territory/${props.id}` : `/pt/territorio/${props.id}`)
-              : (lang === 'en' ? `/en/people/${props.id}` : `/pt/povo/${props.id}`)
-            }
-            className="flex items-center gap-2 mt-2 px-4 py-2.5 rounded-lg bg-[#1a3a2a] text-white text-sm font-medium hover:bg-[#2d6a4f] transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-            </svg>
-            {T.viewPage}
-          </a>
-        ) : props.id ? (
-          <div className="flex items-center gap-2 mt-2 px-4 py-2.5 rounded-lg text-xs"
-            style={{ background: 'rgba(0,0,0,0.04)', color: 'rgba(0,0,0,0.3)', border: '1px dashed rgba(0,0,0,0.12)' }}>
-            <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-            </svg>
-            {lang === 'pt' ? 'Dados oficiais indisponíveis' : 'No official data available'}
-          </div>
-        ) : null}
 
         <p className="text-[10px] text-gray-300 pt-2">{T.source}</p>
       </div>
