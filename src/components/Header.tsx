@@ -4,21 +4,38 @@ import { usePathname } from 'next/navigation';
 import { useLang } from '../contexts/LanguageContext';
 import { t } from '../lib/i18n';
 
-/* Geometric diamond logo mark — inspired by indigenous nested-diamond ceramic patterns */
+/*
+  Cocar (feather headdress) — the sacred crown worn by indigenous peoples across Brazil.
+  5 geometric feathers fan upward from a sun circle, representing:
+  - The cocar: identity, leadership, spiritual connection
+  - The sun circle: cosmological unity (Guarani/Tupi Ñamandu tradition)
+  - Graduating opacity on outer feathers: the feathers radiate from the center like light
+*/
 function LogoMark() {
   return (
-    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
-      {/* Outer diamond — gold */}
-      <polygon points="17,1 33,17 17,33 1,17" fill="#c9a94a" />
-      {/* Upper-left & lower-right triangles — dark green (creates hourglass inlay) */}
-      <polygon points="17,1 1,17 17,17"  fill="#1a3a2a" />
-      <polygon points="17,17 33,17 17,33" fill="#1a3a2a" />
-      {/* Inner diamond — gold */}
-      <polygon points="17,9 25,17 17,25 9,17" fill="#c9a94a" />
-      {/* Center — dark green */}
-      <circle cx="17" cy="17" r="3" fill="#1a3a2a" />
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      {/* ── Feathers (cocar) ── */}
+      {/* Far-left feather */}
+      <polygon points="3,14 11,22 9,23"   fill="#c9a94a" opacity="0.42" />
+      {/* Left feather */}
+      <polygon points="9,5  15,21 12,22"  fill="#c9a94a" opacity="0.68" />
+      {/* Center feather — tallest, full opacity */}
+      <polygon points="18,1 21,21 15,21"  fill="#c9a94a" />
+      {/* Right feather */}
+      <polygon points="27,5  21,21 24,22" fill="#c9a94a" opacity="0.68" />
+      {/* Far-right feather */}
+      <polygon points="33,14 25,22 27,23" fill="#c9a94a" opacity="0.42" />
+
+      {/* Headband — thin bar connecting feather bases */}
+      <rect x="9" y="20.5" width="18" height="2" rx="1" fill="#c9a94a" opacity="0.55" />
+
+      {/* ── Sun circle ── */}
+      {/* Outer ring — gold */}
+      <circle cx="18" cy="28" r="7.5" fill="#c9a94a" />
+      {/* Inner ring — dark green */}
+      <circle cx="18" cy="28" r="4.8" fill="#1a3a2a" />
       {/* Center dot — gold */}
-      <circle cx="17" cy="17" r="1.2" fill="#c9a94a" />
+      <circle cx="18" cy="28" r="2"   fill="#c9a94a" />
     </svg>
   );
 }
