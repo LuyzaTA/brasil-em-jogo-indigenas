@@ -29,7 +29,30 @@ export default function MapComponent({ mode, onSelectFeature }: MapComponentProp
 
     const map = new maplibregl.Map({
       container: containerRef.current,
-      style: 'https://demotiles.maplibre.org/style.json',
+      style: {
+        version: 8,
+        sources: {
+          satellite: {
+            type: 'raster',
+            tiles: [
+              'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            ],
+            tileSize: 256,
+            attribution: '© Esri, Maxar, Earthstar Geographics, GIS User Community',
+          },
+          labels: {
+            type: 'raster',
+            tiles: [
+              'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+            ],
+            tileSize: 256,
+          },
+        },
+        layers: [
+          { id: 'satellite-layer', type: 'raster', source: 'satellite' },
+          { id: 'labels-layer',    type: 'raster', source: 'labels',    paint: { 'raster-opacity': 0.7 } },
+        ],
+      } as any,
       center: [-54, -14],
       zoom: 3.5,
     });
@@ -53,7 +76,7 @@ export default function MapComponent({ mode, onSelectFeature }: MapComponentProp
         source: 'territories',
         paint: {
           'fill-color': '#2d6a4f',
-          'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.55, 0.3],
+          'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.6, 0.38],
         },
       });
 
@@ -98,7 +121,7 @@ export default function MapComponent({ mode, onSelectFeature }: MapComponentProp
         id: 'territories-outline',
         type: 'line',
         source: 'territories',
-        paint: { 'line-color': '#1a3a2a', 'line-width': 1 },
+        paint: { 'line-color': '#c9a94a', 'line-width': 1, 'line-opacity': 0.7 },
       });
 
       // --- Peoples source + layers ---

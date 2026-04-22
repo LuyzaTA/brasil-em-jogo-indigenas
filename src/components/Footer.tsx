@@ -5,9 +5,7 @@ import { t } from '../lib/i18n';
 export default function Footer() {
   const { lang } = useLang();
 
-  const quote = lang === 'pt'
-    ? { text: '"A terra não nos pertence. Nós pertencemos à terra."', attr: '— Sabedoria indígena' }
-    : { text: '"The earth does not belong to us. We belong to the earth."', attr: '— Indigenous wisdom' };
+  const quote = { text: '"Deus sive Natura"', attr: '— Spinoza' };
 
   return (
     <footer style={{ background: '#1a3a2a', flexShrink: 0 }}>
