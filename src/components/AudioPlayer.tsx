@@ -49,18 +49,16 @@ export default function AudioPlayer() {
         }
       `}</style>
 
-      {/* Fixed floating button — bottom-right, above timeline */}
+      {/* Fixed inside the timeline strip — sits left of the donate button */}
       <button
         onClick={toggle}
         title="Forest Lament Resurgence — luyzatalexandre"
         className="fixed z-50 flex flex-col items-center justify-center gap-0.5 px-2.5 py-2 rounded-xl transition-all duration-200 hover:brightness-110 hover:scale-105 active:scale-95"
         style={{
-          bottom: '100px',
-          right:  '16px',
-          background: playing ? 'rgba(13,31,22,0.92)' : 'rgba(13,31,22,0.75)',
-          border: `1px solid ${playing ? 'rgba(201,169,74,0.45)' : 'rgba(255,255,255,0.1)'}`,
-          backdropFilter: 'blur(8px)',
-          boxShadow: playing ? '0 0 16px rgba(201,169,74,0.2), 0 2px 12px rgba(0,0,0,0.4)' : '0 2px 12px rgba(0,0,0,0.3)',
+          bottom: '10px',
+          right:  '92px',
+          background: playing ? 'rgba(201,169,74,0.15)' : 'rgba(255,255,255,0.05)',
+          border: `1px solid ${playing ? 'rgba(201,169,74,0.4)' : 'rgba(255,255,255,0.1)'}`,
         }}
       >
         {playing ? (
