@@ -5,6 +5,7 @@ import ModeControls from '../components/ModeControls';
 import Sidebar from '../components/Sidebar';
 import { createClient } from '@supabase/supabase-js';
 import { useLang } from '../contexts/LanguageContext';
+import { useAudio } from '../contexts/AudioContext';
 import { t } from '../lib/i18n';
 
 const MapComponent = dynamic(() => import('../components/MapComponent'), { ssr: false });
@@ -50,6 +51,7 @@ function eraColor(dateStr: string): string {
 export default function Home() {
   const { lang } = useLang();
   const T = t[lang].home;
+  const { playing, toggle } = useAudio();
 
   const [mode, setMode] = useState<'territories' | 'peoples' | 'data' | 'history'>('territories');
   const [selectedFeature, setSelectedFeature] = useState<any>(null);
@@ -190,11 +192,42 @@ export default function Home() {
               })}
             </div>
 
-            {/* Donate button */}
+            {/* Music + Donate buttons */}
             <div
               className="sticky right-0 z-20 flex-shrink-0 flex items-center gap-2 h-full pl-10 pr-3"
               style={{ background: 'linear-gradient(to left, #0d1f16 60%, transparent)' }}
             >
+              {/* Music toggle */}
+              <button
+                onClick={toggle}
+                title="Forest Lament Resurgence"
+                className="flex flex-col items-center justify-center gap-0.5 px-2.5 py-2 rounded-xl transition-all duration-200 hover:brightness-110 hover:scale-105 active:scale-95"
+                style={{
+                  background: playing ? 'rgba(201,169,74,0.15)' : 'rgba(255,255,255,0.05)',
+                  border: `1px solid ${playing ? 'rgba(201,169,74,0.4)' : 'rgba(255,255,255,0.1)'}`,
+                }}
+              >
+                {playing ? (
+                  <div className="flex items-end gap-[2px]" style={{ height: '14px' }}>
+                    {[3, 5, 4, 6, 3].map((h, i) => (
+                      <span key={i} className="w-[2px] rounded-full" style={{
+                        height: `${h * 2}px`, background: '#c9a94a',
+                        animation: `bar-bounce ${0.38 + i * 0.09}s ease-in-out infinite alternate`,
+                        transformOrigin: 'bottom',
+                      }} />
+                    ))}
+                  </div>
+                ) : (
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="rgba(255,255,255,0.4)">
+                    <path d="M9 3v10.55A4 4 0 1 0 11 17V7h4V3H9z"/>
+                  </svg>
+                )}
+                <span className="text-[8px] font-bold tracking-wider uppercase leading-none"
+                  style={{ color: playing ? 'rgba(201,169,74,0.8)' : 'rgba(255,255,255,0.3)' }}>
+                  {playing ? 'On' : 'Off'}
+                </span>
+              </button>
+
               <a
                 href="https://www.funai.gov.br/index.php/comunicacao/noticias/7879-apoio-as-populacoes-indigenas"
                 target="_blank"
@@ -230,6 +263,8 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      <style>{`@keyframes bar-bounce { from { transform: scaleY(0.35); } to { transform: scaleY(1); } }`}</style>
 
       {/* ── Fixed popup ── */}
       {popup && (

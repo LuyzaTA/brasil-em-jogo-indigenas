@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { LanguageProvider } from '../contexts/LanguageContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import AudioPlayer from '../components/AudioPlayer';
+import { AudioProvider } from '../contexts/AudioContext';
 
 export const metadata = {
   title: 'Brasil em Jogo — Povos Indígenas',
@@ -15,12 +15,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="pt">
       <body className="min-h-screen flex flex-col bg-[#f4f0e8] text-[#181818]">
         <LanguageProvider>
-          <Header />
-          <main className="flex-1 flex flex-col">
-            {children}
-          </main>
-          <Footer />
-          <AudioPlayer />
+          <AudioProvider>
+            <Header />
+            <main className="flex-1 flex flex-col">
+              {children}
+            </main>
+            <Footer />
+          </AudioProvider>
         </LanguageProvider>
       </body>
     </html>
